@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    stages {
+        stage('git repo & clean') {
+            steps {
+                bat "rmdir  /s /q DNA"
+                bat "git clone https://github.com/DhamoK/DNA.git"
+                bat "mvn clean -f DNA"
+            }
+        }
+        stage('install') {
+            steps {
+                bat "mvn install -f DNA"
+            }
+        }
+        stage('test') {
+            steps {
+                bat "mvn test -f DNA"
+            }
+        }
+        stage('package') {
+            steps {
+                bat "mvn package -f DNA"
+            }
+        }
+    }
+}
